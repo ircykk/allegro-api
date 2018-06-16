@@ -1,0 +1,40 @@
+{
+    "name": "ircykk/allegro-api",
+    "description": "Allegro API client",
+    "keywords": ["allegro api", "rest", "soap", "sandbox"],
+    "type": "library",
+    "require": {
+        "php": ">=5.5",
+        "psr/http-message": "^1.0",
+        "psr/cache": "^1.0",
+        "php-http/httplug": "^1.1",
+        "php-http/discovery": "^1.0",
+        "php-http/client-common": "^1.6",
+        "php-http/cache-plugin": "^1.4",
+        "php-http/logger-plugin": "^1.0@dev",
+        "symfony/options-resolver": "^2.6 || ^3.0",
+        "ramsey/uuid": "^3.0@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "php-http/guzzle6-adapter": "^1.2@dev",
+        "wsdl2phpgenerator/wsdl2phpgenerator": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ireneusz Kierkowski",
+            "email": "ircykk@gmail.com",
+            "homepage": "https://kierkowski.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Ircykk\\AllegroApi\\": "src/"
+        },
+        "files": [
+            "src/Soap/Types/autoload.php"
+        ]
+    }
+}
