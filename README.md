@@ -8,10 +8,11 @@ A simple Allegro API client library, written with PHP5.
 
 ## Features
 * REST and SOAP WebApi
-* Sandbox Support
+* Sandbox support
 * Auto-complete
+* PSR compatible
 
-## Install
+## Installation
 
 Via Composer:
 
@@ -38,12 +39,7 @@ https://developer.allegro.pl/documentation/
 // Composer autoload
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Allegro API credentials
-$credentials = new \Ircykk\AllegroApi\Credentials(
-    'xxx', // Client Id
-    'yyy', // Client Secret
-    'zzz' // App URL ex. "http://example.com/example.php"
-);
+$credentials = ...
 
 $client = new \Ircykk\AllegroApi\Client($credentials);
 
@@ -58,6 +54,8 @@ if (!isset($_GET['code'])) {
 ```
 
 We have `$token->access_token` for authenticate all our future requests.
+
+See [Examples](examples/authentication.php).
 
 ### Making Requests
 
@@ -92,21 +90,64 @@ $categories = $soapClient->webApi()->getCatsDataLimit(0, 10);
 In order to use [Sandbox environment](https://allegro.pl.allegrosandbox.pl/) just set `Credentials` property `$sandbox` to true.
 ```php
 $credentials = new \Ircykk\AllegroApi\Credentials(
-    'xxx', // Sandbox Client Id
-    'yyy', // Sandbox Client Secret
-    'zzz', // App URL
+    ...
     true // Sandbox
 );
 ```
 
+### Cache usage
+Use any PSR-6 compatible library to cache requests.
+
+In this example we use Symfony Cache, to install just run:
+```bash
+$ composer require symfony/cache
+```
+
+```
+$credentials = ...
+$client = new Client($credentials);
+
+$cache = new FilesystemAdapter();
+$client->addCache($cache, ['default_ttl' => 3600]);
+```
+See [Examples](examples/cache.php).
+
+### Logger
+Use any PSR-3 logger library for example Monolog, to install just run:
+```bash
+$ composer require monolog/monolog
+```
+
+```
+$credentials = ...
+$client = new Client($credentials);
+
+$logger = new Logger('api');
+$logger->pushHandler(
+    new StreamHandler(__DIR__.'/api.log', Logger::DEBUG)
+);
+$loggerPlugin = new LoggerPlugin($logger);
+$client->addPlugin($loggerPlugin);
+```
+See [Examples](examples/log.php).
+
+### Customization
+Thanks to HTTPlug library can be customized easily, for example to set language use [HeaderDefaultsPlugin](http://docs.php-http.org/en/latest/plugins/headers.html) plugin:
+```
+...
+$headerDefaultsPlugin = new HeaderDefaultsPlugin([
+    'Accept-Language' => 'en-US'
+]);
+$client->addPlugin($headerDefaultsPlugin);
+```
+See [full list](http://docs.php-http.org/en/latest/plugins/index.html) of available HTTPlug plugins.
+
 ## TO-DO
 * Tests
 * Documentation
-* Examples
-* More detailed README
 
 ## Contributing
-Feel free to post found issues and contribute.
+Feel free to contribute.
 
 ## Credits
 API client build on top of [HTTPlug](http://httplug.io/) and inspired by [KnpLabs](https://github.com/KnpLabs/) GitHub client.

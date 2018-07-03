@@ -11,4 +11,6 @@
 
 3. With web browser go to the host and port you specified, i.e `http://localhost:8000`
 
-Start:  `http://localhost:8000/authentication.php`
+Rename `credentials.php.dist` to `credentials.php` and insert your credentials.
+
+Start with authentication: `http://localhost:8000/authentication.php`
