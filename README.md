@@ -37,7 +37,7 @@ https://developer.allegro.pl/documentation/
 <?php
 
 // Composer autoload
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $credentials = ...
 
@@ -55,7 +55,7 @@ if (!isset($_GET['code'])) {
 
 We have `$token->access_token` for authenticate all our future requests.
 
-See [Examples](examples/authentication.php).
+See [example](examples/authentication.php).
 
 ### Making Requests
 
@@ -63,7 +63,7 @@ See [Examples](examples/authentication.php).
 <?php
 
 // Composer autoload
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $credentials = ...
 $token = ...
@@ -103,14 +103,14 @@ In this example we use Symfony Cache, to install just run:
 $ composer require symfony/cache
 ```
 
-```
+```php
 $credentials = ...
 $client = new Client($credentials);
 
 $cache = new FilesystemAdapter();
 $client->addCache($cache, ['default_ttl' => 3600]);
 ```
-See [Examples](examples/cache.php).
+See [example](examples/cache.php).
 
 ### Logger
 Use any PSR-3 logger library for example Monolog, to install just run:
@@ -118,7 +118,7 @@ Use any PSR-3 logger library for example Monolog, to install just run:
 $ composer require monolog/monolog
 ```
 
-```
+```php
 $credentials = ...
 $client = new Client($credentials);
 
@@ -129,11 +129,11 @@ $logger->pushHandler(
 $loggerPlugin = new LoggerPlugin($logger);
 $client->addPlugin($loggerPlugin);
 ```
-See [Examples](examples/log.php).
+See [example](examples/log.php).
 
 ### Customization
 Thanks to HTTPlug library can be customized easily, for example to set language use [HeaderDefaultsPlugin](http://docs.php-http.org/en/latest/plugins/headers.html) plugin:
-```
+```php
 ...
 $headerDefaultsPlugin = new HeaderDefaultsPlugin([
     'Accept-Language' => 'en-US'
