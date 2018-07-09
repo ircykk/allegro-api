@@ -17,7 +17,7 @@ $client = new Client($credentials);
 $client->authenticate($token->access_token);
 
 /**
- * Fetch root categories.
+ * Fetch offers with phrase "Lorem ipsum" in name.
  */
 $response = $client->offers()->listing(null, 'Lorem ipsum');
 
