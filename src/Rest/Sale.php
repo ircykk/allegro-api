@@ -49,6 +49,14 @@ class Sale extends AbstractRestResource
     }
 
     /**
+     * @return Sale\OfferVariants
+     */
+    public function offerVariants()
+    {
+        return new Sale\OfferVariants($this->client);
+    }
+
+    /**
      * @return Sale\Loyalty
      */
     public function loyalty()
