@@ -25,6 +25,7 @@ use Ircykk\AllegroApi\Exception\InvalidArgumentException;
  * @method Rest\PointsOfService pointsOfService()
  * @method Rest\Pricing pricing()
  * @method Rest\Offers offers()
+ * @method Rest\Order order()
  *
  * @package Ircykk\AllegroApi
  */
@@ -126,6 +127,8 @@ class Client extends HttpMethodsClient
                 return new Rest\Pricing($this);
             case 'offers':
                 return new Rest\Offers($this);
+            case 'order':
+                return new Rest\Order($this);
             default:
                 throw new InvalidArgumentException(sprintf('Undefined method called: "%s"', $name));
         }
