@@ -16,4 +16,12 @@ class Order extends AbstractRestResource
     {
         return new Order\Events($this->client);
     }
+
+    /**
+     * @return Order\CheckoutForms
+     */
+    public function checkoutForms()
+    {
+        return new Order\CheckoutForms($this->client);
+    }
 }
