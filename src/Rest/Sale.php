@@ -12,19 +12,6 @@ namespace Ircykk\AllegroApi\Rest;
 class Sale extends AbstractRestResource
 {
     /**
-     * [BETA] Returns a list of available delivery methods.
-     *
-     * @return mixed
-     * @throws \Http\Client\Exception
-     */
-    public function deliveryMethods()
-    {
-        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
-
-        return $this->get('/sale/delivery-methods', $requestHeaders);
-    }
-
-    /**
      * @return Sale\Categories
      */
     public function categories()
@@ -93,6 +80,14 @@ class Sale extends AbstractRestResource
     public function sizeTables()
     {
         return new Sale\SizeTables($this->client);
+    }
+
+    /**
+     * @return Sale\DeliveryMethods
+     */
+    public function deliveryMethods()
+    {
+        return new Sale\DeliveryMethods($this->client);
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace Ircykk\AllegroApi\Rest\Sale;
 
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
 use Http\Client\Exception;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class ShippingRates.
@@ -12,7 +12,7 @@ use Http\Client\Exception;
  *
  * @package Ircykk\AllegroApi\Rest
  */
-class ShippingRates extends AbstractRestBetaResource
+class ShippingRates extends AbstractRestResource
 {
     /**
      * [BETA] Returns a list of seller's shipping rates.
@@ -23,7 +23,9 @@ class ShippingRates extends AbstractRestBetaResource
      */
     public function all($sellerId)
     {
-        return $this->get('/sale/shipping-rates?seller.id='.rawurldecode($sellerId));
+        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+
+        return $this->get('/sale/shipping-rates?seller.id='.rawurldecode($sellerId), $requestHeaders);
     }
 
     /**
@@ -35,6 +37,33 @@ class ShippingRates extends AbstractRestBetaResource
      */
     public function show($shippingRatesSetId)
     {
-        return $this->get('/sale/shipping-rates/'.rawurldecode($shippingRatesSetId));
+        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+
+        return $this->get('/sale/shipping-rates/'.rawurldecode($shippingRatesSetId), $requestHeaders);
+    }
+
+    /**
+     * Creates new seller's shipping rates set.
+     *
+     * @param array $params
+     * @return mixed
+     * @throws Exception
+     */
+    public function create(array $params)
+    {
+        return $this->post('/sale/shipping-rates', $params);
+    }
+
+    /**
+     * Updates seller's shipping rates set.
+     *
+     * @param string $setId
+     * @param array $params
+     * @return mixed
+     * @throws Exception
+     */
+    public function update($setId, array $params)
+    {
+        return $this->put('/sale/shipping-rates/'.rawurldecode($setId), $params);
     }
 }
