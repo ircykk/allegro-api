@@ -1,6 +1,7 @@
 /vendor/
 /.idea
 composer.lock
+phpunit.xml
 /example
 /examples/credentials.php
 /examples/token.json
