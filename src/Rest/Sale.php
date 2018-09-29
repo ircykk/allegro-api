@@ -105,4 +105,12 @@ class Sale extends AbstractRestResource
     {
         return new Sale\Commands($this->client);
     }
+
+    /**
+     * @return Sale\Images
+     */
+    public function images()
+    {
+        return new Sale\Images($this->client);
+    }
 }

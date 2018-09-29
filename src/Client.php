@@ -37,6 +37,11 @@ class Client extends HttpMethodsClient
     const API_URI = 'https://api.allegro.pl';
 
     /**
+     * Api image endpoint URI.
+     */
+    const API_IMAGE_URI = 'https://upload.allegro.pl';
+
+    /**
      * Api Sandbox endpoint URI.
      */
     const API_SANDBOX_URI = 'https://api.allegro.pl.allegrosandbox.pl';
@@ -160,12 +165,16 @@ class Client extends HttpMethodsClient
      */
     public function sendRequest(RequestInterface $request)
     {
+        if (in_array($request->getHeader('Content-Type'), ['image/jpeg', 'image/png', 'image/gif'])) {
+            $uri = self::API_IMAGE_URI;
+        } else {
+            $uri = $this->credentials->isSandbox() ? self::API_SANDBOX_URI : self::API_URI;
+        }
+
         /**
          * Set host.
          */
-        $host = UriFactoryDiscovery::find()->createUri(
-            $this->credentials->isSandbox() ? self::API_SANDBOX_URI : self::API_URI
-        );
+        $host = UriFactoryDiscovery::find()->createUri($uri);
         $uri = $request->getUri()
             ->withHost($host->getHost())
             ->withScheme($host->getScheme())

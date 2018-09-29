@@ -51,6 +51,7 @@ abstract class AbstractRestResource
 
     /**
      * @return string
+     * @throws \Exception
      */
     protected function genUuid()
     {
@@ -78,12 +79,12 @@ abstract class AbstractRestResource
      * Sends a POST request.
      *
      * @param string $path
-     * @param array $params
+     * @param mixed $data
      * @param array $requestHeaders
      * @return mixed
      * @throws \Http\Client\Exception
      */
-    protected function post($path, array $params, array $requestHeaders = [])
+    protected function post($path, $data, array $requestHeaders = [])
     {
         if (empty($requestHeaders['Content-Type'])) {
             $requestHeaders['Content-Type'] = 'application/vnd.allegro.public.v1+json';
@@ -92,7 +93,7 @@ abstract class AbstractRestResource
         $response = $this->client->post(
             $path,
             $requestHeaders,
-            json_encode($params)
+            is_array($data) ? json_encode($data) : $data
         );
 
         return $this->formatResponse($response);
