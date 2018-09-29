@@ -44,6 +44,14 @@ class Sale extends AbstractRestResource
     }
 
     /**
+     * @return Sale\OfferTags
+     */
+    public function offerTags()
+    {
+        return new Sale\OfferTags($this->client);
+    }
+
+    /**
      * @return Sale\Loyalty
      */
     public function loyalty()

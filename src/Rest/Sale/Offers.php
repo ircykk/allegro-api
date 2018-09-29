@@ -49,4 +49,12 @@ class Offers extends AbstractRestBetaResource
     {
         return $this->put('/sale/offers/'.rawurldecode($offerId), $params);
     }
+
+    /**
+     * @return Tags\Tags
+     */
+    public function tags()
+    {
+        return new Tags\Tags($this->client);
+    }
 }
