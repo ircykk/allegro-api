@@ -2,7 +2,7 @@
 
 namespace Ircykk\AllegroApi\Rest\Sale;
 
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class Offers.
@@ -11,10 +11,10 @@ use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
  *
  * @package Ircykk\AllegroApi\Rest\Sale
  */
-class Offers extends AbstractRestBetaResource
+class Offers extends AbstractRestResource
 {
     /**
-     * [BETA] Gets single offer by id.
+     * Gets single offer by id.
      *
      * @param string $offerId
      * @return mixed
@@ -26,7 +26,7 @@ class Offers extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Creates new offer.
+     * Creates new offer.
      *
      * @param array $params
      * @return mixed
@@ -38,7 +38,7 @@ class Offers extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Updates offer by id.
+     * Updates offer by id.
      *
      * @param string $offerId
      * @param array $params

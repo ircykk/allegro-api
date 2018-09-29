@@ -23,9 +23,7 @@ class ShippingRates extends AbstractRestResource
      */
     public function all($sellerId)
     {
-        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
-
-        return $this->get('/sale/shipping-rates?seller.id='.rawurldecode($sellerId), $requestHeaders);
+        return $this->get('/sale/shipping-rates?seller.id='.rawurldecode($sellerId));
     }
 
     /**
@@ -37,9 +35,7 @@ class ShippingRates extends AbstractRestResource
      */
     public function show($shippingRatesSetId)
     {
-        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
-
-        return $this->get('/sale/shipping-rates/'.rawurldecode($shippingRatesSetId), $requestHeaders);
+        return $this->get('/sale/shipping-rates/'.rawurldecode($shippingRatesSetId));
     }
 
     /**

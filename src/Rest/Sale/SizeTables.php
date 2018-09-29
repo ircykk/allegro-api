@@ -2,7 +2,7 @@
 
 namespace Ircykk\AllegroApi\Rest\Sale;
 
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class SizeTables.
@@ -11,10 +11,10 @@ use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
  *
  * @package Ircykk\AllegroApi\Rest
  */
-class SizeTables extends AbstractRestBetaResource
+class SizeTables extends AbstractRestResource
 {
     /**
-     * [BETA] Read size tables list of authenticated user.
+     * Read size tables list of authenticated user.
      *
      * @param int $userId
      * @return mixed
@@ -26,7 +26,7 @@ class SizeTables extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Read size table of authenticated user.
+     * Read size table of authenticated user.
      *
      * @param string $tableId
      * @return mixed

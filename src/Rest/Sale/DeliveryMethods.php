@@ -3,7 +3,7 @@
 namespace Ircykk\AllegroApi\Rest\Sale;
 
 use Http\Client\Exception;
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class DeliveryMethods.
@@ -12,10 +12,10 @@ use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
  *
  * @package Ircykk\AllegroApi\Rest
  */
-class DeliveryMethods extends AbstractRestBetaResource
+class DeliveryMethods extends AbstractRestResource
 {
     /**
-     * [BETA] Get a list of available delivery methods.
+     * Get a list of available delivery methods.
      *
      * @return mixed
      * @throws Exception

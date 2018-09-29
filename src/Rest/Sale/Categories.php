@@ -2,7 +2,7 @@
 
 namespace Ircykk\AllegroApi\Rest\Sale;
 
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class Categories.
@@ -11,10 +11,10 @@ use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
  *
  * @package Ircykk\AllegroApi\Rest\Sale
  */
-class Categories extends AbstractRestBetaResource
+class Categories extends AbstractRestResource
 {
     /**
-     * [BETA] Get categories children by parent id.
+     * Get categories children by parent id.
      *
      * @param string $parentId
      * @return mixed
@@ -26,7 +26,7 @@ class Categories extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Get category by id.
+     * Get category by id.
      *
      * @param string $categoryId
      * @return mixed

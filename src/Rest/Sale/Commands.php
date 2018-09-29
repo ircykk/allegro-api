@@ -14,7 +14,7 @@ use Ircykk\AllegroApi\Rest\AbstractRestResource;
 class Commands extends AbstractRestResource
 {
     /**
-     * [BETA] Allows modification of multiple offers.
+     * Allows modification of multiple offers.
      *
      * @param array $params
      * @param string $commandId
@@ -27,16 +27,11 @@ class Commands extends AbstractRestResource
             $commandId = $this->genUuid();
         }
 
-        $requestHeaders = [
-            'Accept' => 'application/vnd.allegro.beta.v1+json',
-            'Content-Type' => 'application/vnd.allegro.beta.v1+json',
-        ];
-
-        return $this->put('/sale/offer-publication-commands/'.rawurldecode($commandId), $params, $requestHeaders);
+        return $this->put('/sale/offer-publication-commands/'.rawurldecode($commandId), $params);
     }
 
     /**
-     * [BETA] Provides report summary for given commandId.
+     * Provides report summary for given commandId.
      *
      * @param string $commandId
      * @return mixed
@@ -44,16 +39,11 @@ class Commands extends AbstractRestResource
      */
     public function offerPublicationStatus($commandId)
     {
-        $requestHeaders = [
-            'Accept' => 'application/vnd.allegro.beta.v1+json',
-            'Content-Type' => 'application/vnd.allegro.beta.v1+json',
-        ];
-
-        return $this->get('/sale/offer-publication-commands/'.rawurldecode($commandId), $requestHeaders);
+        return $this->get('/sale/offer-publication-commands/'.rawurldecode($commandId));
     }
 
     /**
-     * [BETA] Provides detailed report for single command task.
+     * Provides detailed report for single command task.
      *
      * @param $commandId
      * @return mixed
@@ -61,12 +51,7 @@ class Commands extends AbstractRestResource
      */
     public function offerPublicationTasks($commandId)
     {
-        $requestHeaders = [
-            'Accept' => 'application/vnd.allegro.beta.v1+json',
-            'Content-Type' => 'application/vnd.allegro.beta.v1+json',
-        ];
-
-        return $this->get('/sale/offer-publication-commands/'.rawurldecode($commandId).'/tasks', $requestHeaders);
+        return $this->get('/sale/offer-publication-commands/'.rawurldecode($commandId).'/tasks');
     }
 
     /**
