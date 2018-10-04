@@ -45,16 +45,16 @@ class AbstractRestBetaResource extends AbstractRestResource
      * Adds "Accept" header for beta resources.
      *
      * @param $path
-     * @param array $params
+     * @param mixed $data
      * @param array $requestHeaders
      * @return mixed
      * @throws \Http\Client\Exception
      */
-    protected function post($path, array $params = [], array $requestHeaders = [])
+    protected function post($path, $data, array $requestHeaders = [])
     {
         $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
         $requestHeaders['Content-Type'] = 'application/vnd.allegro.beta.v1+json';
 
-        return parent::post($path, $params, $requestHeaders);
+        return parent::post($path, $data, $requestHeaders);
     }
 }
