@@ -14,6 +14,56 @@ use Ircykk\AllegroApi\Rest\AbstractRestResource;
 class Offers extends AbstractRestResource
 {
     /**
+     * Gets seller's offers.
+     *
+     * @param string $sellerId
+     * @param string $name
+     * @param float $priceFrom
+     * @param float $priceTo
+     * @param string $publicationStatus INACTIVE, ACTIVE, ACTIVATING, ENDED
+     * @param string $sellingModeFormat BUY_NOW, ADVERTISEMENT, AUCTION
+     * @param string $sort               sellingMode.price.amount (ASC)
+     *                                  -sellingMode.price.amount (DESC)
+     *                                  stock.sold (ASC)
+     *                                  -stock.sold (DESC)
+     *                                  stock.available (ASC)
+     *                                  -stock.available (DESC)
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     * @throws \Http\Client\Exception
+     */
+    public function all(
+        $sellerId,
+        $name = null,
+        $priceFrom = null,
+        $priceTo = null,
+        $publicationStatus = null,
+        $sellingModeFormat = null,
+        $sort = null,
+        $limit = 20,
+        $offset = 0
+    ) {
+        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+
+        return $this->get('/sale/offers?'.http_build_query(
+                array_merge(
+                    [
+                        'seller.id' => $sellerId,
+                        'name' => $name,
+                        'sellingMode.price.amount.gte' => $priceFrom,
+                        'sellingMode.price.amount.lte' => $priceTo,
+                        'publication.status' => $publicationStatus,
+                        'sellingMode.format' => $sellingModeFormat,
+                        'sort' => $sort,
+                        'limit' => $limit,
+                        'offset' => $offset,
+                    ]
+                )
+            ), $requestHeaders);
+    }
+
+    /**
      * Gets single offer by id.
      *
      * @param string $offerId
