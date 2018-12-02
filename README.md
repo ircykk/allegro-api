@@ -26,6 +26,14 @@ Library is build on top of [HTTPlug](http://httplug.io/), we need to install HTT
 composer require php-http/guzzle6-adapter
 ```
 
+### PHP 5.x
+
+For PHP 5.x we need to downgrade `symfony/options-resolver` to version `2.8`:
+
+```bash
+composer require symfony/options-resolver:2.8
+```
+
 ## Developer Documentation
 https://developer.allegro.pl/documentation/
 
