@@ -168,4 +168,52 @@ class Commands extends AbstractRestResource
             ])
         );
     }
+
+    /**
+     * Allows quantity modification of multiple offers at once.
+     *
+     * @param array $params
+     * @param string $commandId
+     * @return mixed
+     * @throws \Http\Client\Exception
+     */
+    public function offerQuantityChange(array $params, $commandId = '')
+    {
+        if (!$commandId) {
+            $commandId = $this->genUuid();
+        }
+
+        return $this->put('/sale/offer-quantity-change-commands/'.rawurldecode($commandId), $params);
+    }
+
+    /**
+     * Provides report summary for quantity modification command with given commandId.
+     *
+     * @param string $commandId
+     * @return mixed
+     * @throws \Http\Client\Exception
+     */
+    public function offerQuantityChangeStatus($commandId)
+    {
+        return $this->get('/sale/offer-quantity-change-commands/'.rawurldecode($commandId));
+    }
+
+    /**
+     * Provides detailed report for quantity modification command with given commandId.
+     *
+     * @param string $commandId
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     * @throws \Http\Client\Exception
+     */
+    public function offerQuantityChangeTasks($commandId, $limit = 100, $offset = 0)
+    {
+        return $this->get('/sale/offer-quantity-change-commands/'.rawurldecode($commandId).'/tasks?'
+            .http_build_query([
+                'limit' => $limit,
+                'offset' => $offset,
+            ])
+        );
+    }
 }
