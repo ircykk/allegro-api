@@ -47,16 +47,6 @@ class Client extends HttpMethodsClient
     const API_SANDBOX_URI = 'https://api.allegro.pl.allegrosandbox.pl';
 
     /**
-     * Api authorize URL.
-     */
-    const OAUTH2_AUTH_URL = 'https://allegro.pl/auth/oauth/authorize';
-
-    /**
-     * Api Sandbox authorize URL.
-     */
-    const OAUTH2_AUTH_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/';
-
-    /**
      * @var HttpClientBuilder
      */
     private $httpClientBuilder;
@@ -308,15 +298,6 @@ class Client extends HttpMethodsClient
      */
     public function getAuthUrl()
     {
-        $query = [
-            'response_type' => 'code',
-            'client_id' => $this->credentials->getClientId(),
-            'redirect_uri' => $this->credentials->getRedirectUri(),
-        ];
-
-        return ($this->credentials->isSandbox()
-                ? self::OAUTH2_AUTH_SANDBOX_URL
-                : self::OAUTH2_AUTH_URL
-            ).'?'.http_build_query($query);
+        return $this->getOAuth2Service()->getAuthUrl();
     }
 }

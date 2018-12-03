@@ -17,14 +17,24 @@ use Ircykk\AllegroApi\Exception\LogicException;
 class OAuth2 implements AuthInterface
 {
     /**
-     * Auth token endpoint.
+     * Api authorize URL.
      */
-    const OAUTH2_TOKEN_URI = 'https://allegro.pl/auth/oauth/token';
+    const OAUTH2_AUTH_URL = 'https://allegro.pl/auth/oauth/authorize';
 
     /**
-     * Auth token sandbox endpoint.
+     * Api Sandbox authorize URL.
      */
-    const OAUTH2_TOKEN_SANDBOX_URI = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/token';
+    const OAUTH2_AUTH_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/authorize';
+
+    /**
+     * Auth token URL.
+     */
+    const OAUTH2_TOKEN_URL = 'https://allegro.pl/auth/oauth/token';
+
+    /**
+     * Auth token sandbox URL.
+     */
+    const OAUTH2_TOKEN_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/token';
 
     /**
      * @var string
@@ -157,11 +167,30 @@ class OAuth2 implements AuthInterface
         return $this->requestFactory->createRequest(
             'POST',
             $this->credentials->isSandbox()
-                ? self::OAUTH2_TOKEN_SANDBOX_URI
-                : self::OAUTH2_TOKEN_URI,
+                ? self::OAUTH2_TOKEN_SANDBOX_URL
+                : self::OAUTH2_TOKEN_URL,
             $headers,
             http_build_query($params)
         );
+    }
+
+    /**
+     * Gets authentication URL.
+     *
+     * @return string
+     */
+    public function getAuthUrl()
+    {
+        $query = [
+            'response_type' => 'code',
+            'client_id' => $this->credentials->getClientId(),
+            'redirect_uri' => $this->credentials->getRedirectUri(),
+        ];
+
+        return ($this->credentials->isSandbox()
+            ? self::OAUTH2_AUTH_SANDBOX_URL
+            : self::OAUTH2_AUTH_URL
+        ) . '?' . http_build_query($query);
     }
 
     /**
