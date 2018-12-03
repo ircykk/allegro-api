@@ -2,12 +2,16 @@
 
 namespace Ircykk\AllegroApi\Auth;
 
+use Exception;
+use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\HttpClientDiscovery;
 use Ircykk\AllegroApi\CredentialsInterface;
 use Ircykk\AllegroApi\Exception\LogicException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class OAuth2.
@@ -78,9 +82,9 @@ class OAuth2 implements AuthInterface
      * Fetch the auth token.
      *
      * @param HttpClient|null $httpClient
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     * @throws \Http\Client\Exception
+     * @return ResponseInterface
+     * @throws Exception
+     * @throws ClientException
      */
     public function fetchAuthToken(HttpClient $httpClient = null)
     {
@@ -94,7 +98,7 @@ class OAuth2 implements AuthInterface
     /**
      * Sets the authorization code.
      *
-     * @param $code
+     * @param string $code
      */
     public function setCode($code)
     {
@@ -114,7 +118,7 @@ class OAuth2 implements AuthInterface
     /**
      * Sets refresh token.
      *
-     * @param $refreshToken
+     * @param string $refreshToken
      */
     public function setRefreshToken($refreshToken)
     {
@@ -134,8 +138,8 @@ class OAuth2 implements AuthInterface
     /**
      * Create token request.
      *
-     * @return \Psr\Http\Message\RequestInterface
-     * @throws \Exception
+     * @return RequestInterface
+     * @throws Exception
      */
     public function generateTokenRequest()
     {
@@ -159,9 +163,9 @@ class OAuth2 implements AuthInterface
 
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Basic '.base64_encode(
-                $this->credentials->getClientId().':'.$this->credentials->getClientSecret()
-            )
+            'Authorization' => 'Basic ' . base64_encode(
+                $this->credentials->getClientId() . ':' . $this->credentials->getClientSecret()
+            ),
         ];
 
         return $this->requestFactory->createRequest(
