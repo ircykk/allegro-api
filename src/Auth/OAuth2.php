@@ -22,6 +22,11 @@ class OAuth2 implements AuthInterface
     const OAUTH2_TOKEN_URI = 'https://allegro.pl/auth/oauth/token';
 
     /**
+     * Auth token sandbox endpoint.
+     */
+    const OAUTH2_TOKEN_SANDBOX_URI = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/token';
+
+    /**
      * @var string
      */
     private $code;
@@ -151,7 +156,9 @@ class OAuth2 implements AuthInterface
 
         return $this->requestFactory->createRequest(
             'POST',
-            self::OAUTH2_TOKEN_URI,
+            $this->credentials->isSandbox()
+                ? self::OAUTH2_TOKEN_SANDBOX_URI
+                : self::OAUTH2_TOKEN_URI,
             $headers,
             http_build_query($params)
         );
