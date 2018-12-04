@@ -64,14 +64,14 @@ class ClientTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAuthUrl()
     {
-        $actual = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/';
-        $actual .= '?'.http_build_query([
+        $expectedUrl = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/authorize';
+        $expectedUrl .= '?' . http_build_query([
             'response_type' => 'code',
             'client_id' => 'AAAA-BBBB-CCCC',
             'redirect_uri' => 'http://example.com/example',
         ]);
 
-        $this->assertEquals($this->client->getAuthUrl(), $actual);
+        $this->assertEquals($expectedUrl, $this->client->getAuthUrl());
     }
 
     /**

@@ -2,8 +2,10 @@
 
 namespace Ircykk\AllegroApi;
 
+use Exception;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\Plugin;
+use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient;
 use Http\Discovery\UriFactoryDiscovery;
 use Http\Message\RequestFactory;
@@ -15,6 +17,7 @@ use Ircykk\AllegroApi\Auth\OAuth2;
 use Ircykk\AllegroApi\HttpClient\Plugin\TokenAuthentication;
 use Ircykk\AllegroApi\Rest;
 use Ircykk\AllegroApi\Exception\InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * REST Api Client.
@@ -47,16 +50,6 @@ class Client extends HttpMethodsClient
     const API_SANDBOX_URI = 'https://api.allegro.pl.allegrosandbox.pl';
 
     /**
-     * Api authorize URL.
-     */
-    const OAUTH2_AUTH_URL = 'https://allegro.pl/auth/oauth/authorize';
-
-    /**
-     * Api Sandbox authorize URL.
-     */
-    const OAUTH2_AUTH_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/';
-
-    /**
      * @var HttpClientBuilder
      */
     private $httpClientBuilder;
@@ -73,6 +66,7 @@ class Client extends HttpMethodsClient
 
     /**
      * Access token.
+     * @var string|null
      */
     private $token;
 
@@ -96,8 +90,8 @@ class Client extends HttpMethodsClient
     /**
      * Calls REST resource.
      *
-     * @param $name
-     * @param $args
+     * @param string $name
+     * @param mixed $args
      * @return Rest\AbstractRestResource
      */
     public function __call($name, $args)
@@ -112,7 +106,7 @@ class Client extends HttpMethodsClient
     /**
      * Calls REST resource.
      *
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     public function api($name)
@@ -159,9 +153,9 @@ class Client extends HttpMethodsClient
      * Sends REST requests.
      *
      * @param RequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     * @throws \Http\Client\Exception
+     * @return ResponseInterface
+     * @throws Exception
+     * @throws ClientException
      */
     public function sendRequest(RequestInterface $request)
     {
@@ -215,23 +209,21 @@ class Client extends HttpMethodsClient
     /**
      * Authenticate all next requests.
      *
-     * @param $token
+     * @param string $token
      */
     public function authenticate($token)
     {
         $this->setToken($token);
 
-        $this->addPlugin(
-            new TokenAuthentication($this->token)
-        );
+        $this->addPlugin(new TokenAuthentication($this->token));
     }
 
     /**
      * Gets access token by access code.
      *
-     * @param $code
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \Http\Client\Exception
+     * @param string $code
+     * @return mixed|ResponseInterface
+     * @throws ClientException
      */
     public function fetchAccessTokenWithAuthCode($code)
     {
@@ -244,9 +236,9 @@ class Client extends HttpMethodsClient
     /**
      *  Gets access token by refresh token.
      *
-     * @param $refreshToken
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \Http\Client\Exception
+     * @param string $refreshToken
+     * @return mixed|ResponseInterface
+     * @throws ClientException
      */
     public function fetchAccessTokenWithRefreshToken($refreshToken)
     {
@@ -266,6 +258,7 @@ class Client extends HttpMethodsClient
         if (!$this->auth) {
             $this->auth = $this->createOAuth2Service();
         }
+
         return $this->auth;
     }
 
@@ -276,9 +269,7 @@ class Client extends HttpMethodsClient
      */
     protected function createOAuth2Service()
     {
-        return new OAuth2(
-            $this->credentials
-        );
+        return new OAuth2($this->credentials);
     }
 
     /**
@@ -294,7 +285,7 @@ class Client extends HttpMethodsClient
     /**
      * Sets new token.
      *
-     * @param $token
+     * @param string $token
      */
     public function setToken($token)
     {
@@ -308,15 +299,6 @@ class Client extends HttpMethodsClient
      */
     public function getAuthUrl()
     {
-        $query = [
-            'response_type' => 'code',
-            'client_id' => $this->credentials->getClientId(),
-            'redirect_uri' => $this->credentials->getRedirectUri(),
-        ];
-
-        return ($this->credentials->isSandbox()
-                ? self::OAUTH2_AUTH_SANDBOX_URL
-                : self::OAUTH2_AUTH_URL
-            ).'?'.http_build_query($query);
+        return $this->getOAuth2Service()->getAuthUrl();
     }
 }
