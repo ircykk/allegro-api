@@ -2,20 +2,20 @@
 
 namespace Ircykk\AllegroApi\Rest\Sale\Categories;
 
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
 use Http\Client\Exception;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
- * Class CategoriesParameters.
+ * Class Parameters.
  *
  * @link https://developer.allegro.pl/documentation/#/offer-management
  *
  * @package Ircykk\AllegroApi\Rest\Sale
  */
-class Parameters extends AbstractRestBetaResource
+class Parameters extends AbstractRestResource
 {
     /**
-     * [BETA] Gets parameters by category id.
+     * Gets parameters by category id.
      *
      * @param string $categoryId
      * @return mixed
