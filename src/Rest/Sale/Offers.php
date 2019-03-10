@@ -30,6 +30,7 @@ class Offers extends AbstractRestResource
      *                                  -stock.available (DESC)
      * @param int $limit
      * @param int $offset
+     * @param string $externalId
      * @return mixed
      * @throws \Http\Client\Exception
      */
@@ -42,7 +43,8 @@ class Offers extends AbstractRestResource
         $sellingModeFormat = null,
         $sort = null,
         $limit = 20,
-        $offset = 0
+        $offset = 0,
+        $externalId = null
     ) {
         $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
 
@@ -55,6 +57,7 @@ class Offers extends AbstractRestResource
                         'sellingMode.price.amount.lte' => $priceTo,
                         'publication.status' => $publicationStatus,
                         'sellingMode.format' => $sellingModeFormat,
+                        'external.id' => $externalId,
                         'sort' => $sort,
                         'limit' => $limit,
                         'offset' => $offset,
