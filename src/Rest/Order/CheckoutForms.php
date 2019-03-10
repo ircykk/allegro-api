@@ -47,4 +47,25 @@ class CheckoutForms extends AbstractRestBetaResource
     {
         return $this->get('/order/checkout-forms/'.rawurldecode($checkoutFormId));
     }
+
+    /**
+     * [BETA] Add a parcel tracking number.
+     *
+     * @param string $idCheckoutForm
+     * @param string $carrierId
+     * @param string $waybill
+     * @param array $lineItems
+     * @param string $carrierName
+     * @return mixed
+     * @throws Exception
+     */
+    public function addTrackingNumber($idCheckoutForm, $carrierId, $waybill, $lineItems, $carrierName = null)
+    {
+        return $this->post('/order/checkout-forms/'.rawurldecode($idCheckoutForm).'/shipments', [
+            'carrierId' => $carrierId,
+            'waybill' => $waybill,
+            'lineItems' => $lineItems,
+            'carrierName' => $carrierName,
+        ]);
+    }
 }
