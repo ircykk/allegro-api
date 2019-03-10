@@ -3,7 +3,7 @@
 A simple Allegro API client library, written with PHP5.
 
 ## Requirements
-* PHP >= 5.5
+* PHP >= 5.5 || PHP >= 7.0
 * A HTTP client
 
 ## Features
