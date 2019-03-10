@@ -49,6 +49,18 @@ class CheckoutForms extends AbstractRestBetaResource
     }
 
     /**
+     * [BETA] Get a list of parcel tracking numbers.
+     *
+     * @param string $idCheckoutForm
+     * @return mixed
+     * @throws Exception
+     */
+    public function showTrackingNumbers($idCheckoutForm)
+    {
+        return $this->get('/order/checkout-forms/'.rawurldecode($idCheckoutForm).'/shipments');
+    }
+
+    /**
      * [BETA] Add a parcel tracking number.
      *
      * @param string $idCheckoutForm
