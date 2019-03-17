@@ -12,6 +12,8 @@ use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Http\Message\RequestFactory;
 use Http\Message\StreamFactory;
+use Ircykk\AllegroApi\Rest\Response\ObjectResponseFormatter;
+use Ircykk\AllegroApi\Rest\Response\ResponseFormatterInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -46,6 +48,11 @@ class HttpClientBuilder
     private $streamFactory;
 
     /**
+     * @var ResponseFormatterInterface
+     */
+    private $responseFormatter;
+
+    /**
      * @var Plugin[]
      */
     private $plugins = [];
@@ -62,6 +69,7 @@ class HttpClientBuilder
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
 
         $this->streamFactory = StreamFactoryDiscovery::find();
+        $this->responseFormatter = new ObjectResponseFormatter();
     }
 
     /**
@@ -106,5 +114,21 @@ class HttpClientBuilder
     public function addCache(CacheItemPoolInterface $cachePool, array $config = [])
     {
         $this->plugins[] = new Plugin\CachePlugin($cachePool, $this->streamFactory, $config);
+    }
+
+    /**
+     * @param $responseFormatter
+     */
+    public function addResponseFormatter(ResponseFormatterInterface $responseFormatter)
+    {
+        $this->responseFormatter = $responseFormatter;
+    }
+
+    /**
+     * @return ResponseFormatterInterface
+     */
+    public function getResponseFormatter()
+    {
+        return $this->responseFormatter;
     }
 }

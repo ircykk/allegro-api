@@ -149,16 +149,14 @@ abstract class AbstractRestResource
         /**
          * Convert HTTP errors like 403 "Forbidden" without json body
          * to unify errors for all responses.
+         *
+         * @todo move this code
          */
         if ($response->getStatusCode() !== 200 && $response->getBody()->__toString() === '') {
             $errorHandler = new ResponseErrorHandler($response);
             $response = $errorHandler->getResponse();
         }
 
-        if (strpos($response->getHeaderLine('Content-Type'), 'json') !== false) {
-            return json_decode($response->getBody()->__toString());
-        }
-
-        return $response;
+        return $this->client->getResponseFormatter()->formatResponse($response);
     }
 }

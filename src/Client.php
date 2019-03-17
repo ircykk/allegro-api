@@ -17,6 +17,7 @@ use Ircykk\AllegroApi\Auth\OAuth2;
 use Ircykk\AllegroApi\HttpClient\Plugin\TokenAuthentication;
 use Ircykk\AllegroApi\Rest;
 use Ircykk\AllegroApi\Exception\InvalidArgumentException;
+use Ircykk\AllegroApi\Rest\Response\ResponseFormatterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -204,6 +205,22 @@ class Client extends HttpMethodsClient
     public function addCache(CacheItemPoolInterface $cache, array $config = [])
     {
         $this->httpClientBuilder->addCache($cache, $config);
+    }
+
+    /**
+     * @param ResponseFormatterInterface $responseFormatter
+     */
+    public function addResponseFormatter(ResponseFormatterInterface $responseFormatter)
+    {
+        $this->httpClientBuilder->addResponseFormatter($responseFormatter);
+    }
+
+    /**
+     * @return ResponseFormatterInterface
+     */
+    public function getResponseFormatter()
+    {
+        return $this->httpClientBuilder->getResponseFormatter();
     }
 
     /**
