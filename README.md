@@ -65,6 +65,13 @@ We have `$token->access_token` for authenticate all our future requests.
 
 See [example](examples/authentication.php).
 
+#### Client_credentials flow 
+
+In order to access to public available resources such as categories or offers use client credentials flow:
+```php
+$token = $client->fetchAccessTokenWithClientCredentials();
+```
+
 ### Making Requests
 
 ```php

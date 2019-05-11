@@ -266,6 +266,19 @@ class Client extends HttpMethodsClient
     }
 
     /**
+     *  Gets access token by client credentials.
+     *
+     * @return mixed|ResponseInterface
+     * @throws ClientException
+     */
+    public function fetchAccessTokenWithClientCredentials()
+    {
+        $auth = $this->getOAuth2Service();
+
+        return $auth->fetchAuthToken();
+    }
+
+    /**
      * Gets OAuth2 authentication service.
      *
      * @return AuthInterface|OAuth2

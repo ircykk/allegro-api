@@ -158,7 +158,8 @@ class OAuth2 implements AuthInterface
                 $params['refresh_token'] = $this->getRefreshToken();
                 break;
             default:
-                throw new LogicException('Auth code or refresh token must be set');
+                // Client credentials
+                break;
         }
 
         $headers = [
@@ -212,6 +213,6 @@ class OAuth2 implements AuthInterface
             return 'refresh_token';
         }
 
-        return null;
+        return 'client_credentials';
     }
 }
