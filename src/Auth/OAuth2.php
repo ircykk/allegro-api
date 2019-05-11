@@ -41,9 +41,22 @@ class OAuth2 implements AuthInterface
     const OAUTH2_TOKEN_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/token';
 
     /**
+     * Api device code URL.
+     */
+    const OAUTH2_AUTH_DEVICE_URL = 'https://allegro.pl/auth/oauth/device';
+
+    const CODE_TYPE_AUTH = 1;
+    const CODE_TYPE_DEVICE = 2;
+
+    /**
      * @var string
      */
     private $code;
+
+    /**
+     * @var int
+     */
+    private $codeType;
 
     /**
      * @var string
@@ -99,10 +112,12 @@ class OAuth2 implements AuthInterface
      * Sets the authorization code.
      *
      * @param string $code
+     * @param int $codeType
      */
-    public function setCode($code)
+    public function setCode($code, $codeType = self::CODE_TYPE_AUTH)
     {
         $this->code = $code;
+        $this->codeType = $codeType;
     }
 
     /**
@@ -154,6 +169,10 @@ class OAuth2 implements AuthInterface
                 $params['code'] = $this->getCode();
                 $params['redirect_uri'] = $this->credentials->getRedirectUri();
                 break;
+            case 'device_code':
+            case 'urn:ietf:params:oauth:grant-type:device_code':
+                $params['device_code'] = $this->getCode();
+                break;
             case 'refresh_token':
                 $params['refresh_token'] = $this->getRefreshToken();
                 break;
@@ -199,6 +218,36 @@ class OAuth2 implements AuthInterface
     }
 
     /**
+     * Gets user code for device flow auth.
+     *
+     * @return string
+     */
+    public function getAuthUserCode()
+    {
+        $params = [
+            'client_id' => $this->credentials->getClientId(),
+        ];
+
+        $headers = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Basic ' . base64_encode(
+                $this->credentials->getClientId() . ':' . $this->credentials->getClientSecret()
+            ),
+        ];
+
+        $request = $this->requestFactory->createRequest(
+            'POST',
+            self::OAUTH2_AUTH_DEVICE_URL,
+            $headers,
+            http_build_query($params)
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        return json_decode($response->getBody()->__toString());
+    }
+
+    /**
      * Gets grant type depends on object.
      *
      * @return null|string
@@ -206,7 +255,14 @@ class OAuth2 implements AuthInterface
     public function getGrantType()
     {
         if ($this->code) {
-            return 'authorization_code';
+            switch ($this->codeType) {
+                case self::CODE_TYPE_AUTH:
+                    return 'authorization_code';
+                case self::CODE_TYPE_DEVICE:
+                    return 'urn:ietf:params:oauth:grant-type:device_code';
+                default:
+                    break;
+            }
         }
 
         if ($this->refreshToken) {

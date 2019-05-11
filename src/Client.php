@@ -251,6 +251,21 @@ class Client extends HttpMethodsClient
     }
 
     /**
+     * Gets access token by device code.
+     *
+     * @param string $code
+     * @return mixed|ResponseInterface
+     * @throws ClientException
+     */
+    public function fetchAccessTokenWithDeviceCode($code)
+    {
+        $auth = $this->getOAuth2Service();
+        $auth->setCode($code, $auth::CODE_TYPE_DEVICE);
+
+        return $auth->fetchAuthToken();
+    }
+
+    /**
      *  Gets access token by refresh token.
      *
      * @param string $refreshToken
@@ -330,5 +345,15 @@ class Client extends HttpMethodsClient
     public function getAuthUrl()
     {
         return $this->getOAuth2Service()->getAuthUrl();
+    }
+
+    /**
+     * Gets user code for device flow auth.
+     *
+     * @return string
+     */
+    public function getAuthUserCode()
+    {
+        return $this->getOAuth2Service()->getAuthUserCode();
     }
 }

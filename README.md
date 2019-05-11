@@ -72,6 +72,19 @@ In order to access to public available resources such as categories or offers us
 $token = $client->fetchAccessTokenWithClientCredentials();
 ```
 
+#### Device flow 
+
+To use browserless device flow use `getAuthUserCode()` method to get `user_code` and verification uri:
+```php
+$code = $client->getAuthUserCode();
+```
+and then after user authenticate device you can fetch `acces_token`:
+```php
+$code = ...
+
+$token = $client->fetchAccessTokenWithDeviceCode($code->device_code);
+```
+
 ### Making Requests
 
 ```php

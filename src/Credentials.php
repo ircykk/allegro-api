@@ -40,7 +40,7 @@ class Credentials implements CredentialsInterface
     public function __construct(
         $clientId,
         $clientSecret,
-        $redirectUri,
+        $redirectUri = null,
         $isSandbox = false
     ) {
         $this->clientId = $clientId;
