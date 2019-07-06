@@ -1,10 +1,10 @@
 # PHP Allegro API
 
-A simple Allegro API client library, written with PHP5.
+Allegro API client library, written with PHP.
 
 ## Requirements
-* PHP >= 5.5 || PHP >= 7.0
-* A HTTP client
+* PHP >= 5.6 || PHP >= 7.0
+* HTTP client
 
 ## Features
 * REST and SOAP WebApi
@@ -23,15 +23,7 @@ composer require ircykk/allegro-api
 Library is build on top of [HTTPlug](http://httplug.io/), we need to install HTTP client.
 
 ```bash
-composer require php-http/guzzle6-adapter
-```
-
-### PHP 5.x
-
-For PHP 5.x we need to downgrade `symfony/options-resolver` to version `2.8`:
-
-```bash
-composer require symfony/options-resolver:2.8
+composer require php-http/guzzle6-adapter "^1.1"
 ```
 
 ## Developer Documentation
@@ -65,7 +57,7 @@ We have `$token->access_token` for authenticate all our future requests.
 
 See [example](examples/authentication.php).
 
-#### Client_credentials flow 
+#### Client credentials flow 
 
 In order to access to public available resources such as categories or offers use client credentials flow:
 ```php

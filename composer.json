@@ -4,7 +4,7 @@
     "keywords": ["allegro api", "rest", "soap", "sandbox"],
     "type": "library",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.6",
         "psr/http-message": "^1.0",
         "psr/cache": "^1.0",
         "php-http/httplug": "^1.1",
