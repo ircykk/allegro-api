@@ -7,7 +7,7 @@ use Ircykk\AllegroApi\Rest\AbstractRestResource;
 /**
  * Class Offers.
  *
- * @link https://developer.allegro.pl/documentation/#/offer-management
+ * @link https://developer.allegro.pl/documentation/#operation/searchOffersUsingGET
  *
  * @package Ircykk\AllegroApi\Rest\Sale
  */
@@ -17,53 +17,53 @@ class Offers extends AbstractRestResource
      * Gets seller's offers.
      *
      * @param string $sellerId
+     * @param string $offerId
      * @param string $name
      * @param float $priceFrom
      * @param float $priceTo
-     * @param string $publicationStatus INACTIVE, ACTIVE, ACTIVATING, ENDED
-     * @param string $sellingModeFormat BUY_NOW, ADVERTISEMENT, AUCTION
-     * @param string $sort               sellingMode.price.amount (ASC)
-     *                                  -sellingMode.price.amount (DESC)
-     *                                  stock.sold (ASC)
-     *                                  -stock.sold (DESC)
-     *                                  stock.available (ASC)
-     *                                  -stock.available (DESC)
+     * @param array $publicationStatuses    INACTIVE, ACTIVE, ACTIVATING, ENDED
+     * @param array $sellingModeFormats     BUY_NOW, ADVERTISEMENT, AUCTION
+     * @param string $externalId
+     * @param string $sort
      * @param int $limit
      * @param int $offset
-     * @param string $externalId
+     *
      * @return mixed
      * @throws \Http\Client\Exception
      */
     public function all(
         $sellerId,
+        $offerId = null,
         $name = null,
         $priceFrom = null,
         $priceTo = null,
-        $publicationStatus = null,
-        $sellingModeFormat = null,
+        array $publicationStatuses = [],
+        array $sellingModeFormats = [],
+        $externalId = null,
         $sort = null,
         $limit = 20,
-        $offset = 0,
-        $externalId = null
+        $offset = 0
     ) {
-        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+        $params = [];
+        foreach ($publicationStatuses as $status) {
+            $params[] = 'publication.status='.$status;
+        }
 
-        return $this->get('/sale/offers?'.http_build_query(
-                array_merge(
-                    [
-                        'seller.id' => $sellerId,
-                        'name' => $name,
-                        'sellingMode.price.amount.gte' => $priceFrom,
-                        'sellingMode.price.amount.lte' => $priceTo,
-                        'publication.status' => $publicationStatus,
-                        'sellingMode.format' => $sellingModeFormat,
-                        'external.id' => $externalId,
-                        'sort' => $sort,
-                        'limit' => $limit,
-                        'offset' => $offset,
-                    ]
-                )
-            ), $requestHeaders);
+        foreach ($sellingModeFormats as $format) {
+            $params[] = 'publication.format='.$format;
+        }
+
+        return $this->get('/sale/offers?'.http_build_query([
+                'seller.id' => $sellerId,
+                'offer.id' => $offerId,
+                'name' => $name,
+                'sellingMode.price.amount.gte' => $priceFrom,
+                'sellingMode.price.amount.lte' => $priceTo,
+                'external.id' => $externalId,
+                'sort' => $sort,
+                'limit' => $limit,
+                'offset' => $offset,
+            ]).'&'.implode('&', $params));
     }
 
     /**
