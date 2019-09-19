@@ -49,21 +49,24 @@ class CheckoutForms extends AbstractRestResource
     }
 
     /**
-     * Get a list of parcel tracking numbers.
+     * [BETA] Get a list of parcel tracking numbers.
      *
-     * @param string $idCheckoutForm
+     * @param string $checkoutFormId
      * @return mixed
      * @throws Exception
      */
-    public function showTrackingNumbers($idCheckoutForm)
+    public function showTrackingNumbers($checkoutFormId)
     {
-        return $this->get('/order/checkout-forms/'.rawurldecode($idCheckoutForm).'/shipments');
+        $requestHeaders['Content-Type'] = 'application/vnd.allegro.beta.v1+json';
+        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+
+        return $this->get('/order/checkout-forms/'.rawurldecode($checkoutFormId).'/shipments');
     }
 
     /**
-     * Add a parcel tracking number.
+     * [BETA] Add a parcel tracking number.
      *
-     * @param string $idCheckoutForm
+     * @param string $checkoutFormId
      * @param string $carrierId
      * @param string $waybill
      * @param array $lineItems
@@ -71,13 +74,16 @@ class CheckoutForms extends AbstractRestResource
      * @return mixed
      * @throws Exception
      */
-    public function addTrackingNumber($idCheckoutForm, $carrierId, $waybill, $lineItems, $carrierName = null)
+    public function addTrackingNumber($checkoutFormId, $carrierId, $waybill, $lineItems, $carrierName = null)
     {
-        return $this->post('/order/checkout-forms/'.rawurldecode($idCheckoutForm).'/shipments', [
+        $requestHeaders['Content-Type'] = 'application/vnd.allegro.beta.v1+json';
+        $requestHeaders['Accept'] = 'application/vnd.allegro.beta.v1+json';
+
+        return $this->post('/order/checkout-forms/'.rawurldecode($checkoutFormId).'/shipments', [
             'carrierId' => $carrierId,
             'waybill' => $waybill,
             'lineItems' => $lineItems,
             'carrierName' => $carrierName,
-        ]);
+        ], $requestHeaders);
     }
 }
