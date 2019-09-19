@@ -3,16 +3,16 @@
 namespace Ircykk\AllegroApi\Rest\Order;
 
 use Http\Client\Exception;
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class EventStats.
  *
- * @link https://developer.allegro.pl/documentation/#/order-management
+ * @link https://developer.allegro.pl/documentation/#operation/getOrderEventsStatisticsUsingGET
  *
  * @package Ircykk\AllegroApi\Rest\Order
  */
-class EventStats extends AbstractRestBetaResource
+class EventStats extends AbstractRestResource
 {
     /**
      * Returns object that contains event id and occurrence date of the latest event.

@@ -3,19 +3,19 @@
 namespace Ircykk\AllegroApi\Rest\Order;
 
 use Http\Client\Exception;
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class CheckoutForms.
  *
- * @link https://developer.allegro.pl/documentation/#/order-management
+ * @link https://developer.allegro.pl/documentation/#operation/getListOfOrdersUsingGET
  *
  * @package Ircykk\AllegroApi\Rest\Order
  */
-class CheckoutForms extends AbstractRestBetaResource
+class CheckoutForms extends AbstractRestResource
 {
     /**
-     * [BETA] Returns latest checkout forms (orders).
+     * Returns latest checkout forms (orders).
      *
      * @param int $offset
      * @param int $limit
@@ -37,7 +37,7 @@ class CheckoutForms extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Get checkout form by id.
+     * Get checkout form by id.
      *
      * @param $checkoutFormId
      * @return mixed
@@ -49,7 +49,7 @@ class CheckoutForms extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Get a list of parcel tracking numbers.
+     * Get a list of parcel tracking numbers.
      *
      * @param string $idCheckoutForm
      * @return mixed
@@ -61,7 +61,7 @@ class CheckoutForms extends AbstractRestBetaResource
     }
 
     /**
-     * [BETA] Add a parcel tracking number.
+     * Add a parcel tracking number.
      *
      * @param string $idCheckoutForm
      * @param string $carrierId

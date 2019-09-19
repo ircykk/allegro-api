@@ -3,16 +3,16 @@
 namespace Ircykk\AllegroApi\Rest\Order;
 
 use Http\Client\Exception;
-use Ircykk\AllegroApi\Rest\AbstractRestBetaResource;
+use Ircykk\AllegroApi\Rest\AbstractRestResource;
 
 /**
  * Class Events.
  *
- * @link https://developer.allegro.pl/documentation/#/order-management
+ * @link https://developer.allegro.pl/documentation/#operation/getOrderEventsUsingGET
  *
  * @package Ircykk\AllegroApi\Rest\Order
  */
-class Events extends AbstractRestBetaResource
+class Events extends AbstractRestResource
 {
     /**
      * Returns events of actions like making a purchase, filling in the checkout form (FOD),
