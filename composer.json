@@ -10,8 +10,6 @@
         "php-http/httplug": "^1.1",
         "php-http/discovery": "^1.0",
         "php-http/client-common": "^1.6",
-        "php-http/cache-plugin": "^1.4",
-        "php-http/logger-plugin": "^1.0",
         "ramsey/uuid": "^3.0"
     },
     "require-dev": {
