@@ -30,6 +30,7 @@ use Psr\Http\Message\ResponseInterface;
  * @method Rest\Pricing pricing()
  * @method Rest\Offers offers()
  * @method Rest\Order order()
+ * @method Rest\ShipmentManagement shipmentManagement()
  *
  * @package Ircykk\AllegroApi
  */
@@ -129,6 +130,8 @@ class Client extends HttpMethodsClient
                 return new Rest\Offers($this);
             case 'order':
                 return new Rest\Order($this);
+            case 'shipmentManagement':
+                return new Rest\ShipmentManagement($this);
             default:
                 throw new InvalidArgumentException(sprintf('Undefined method called: "%s"', $name));
         }
