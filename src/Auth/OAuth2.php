@@ -225,7 +225,7 @@ class OAuth2 implements AuthInterface
     /**
      * Gets user code for device flow auth.
      *
-     * @return string
+     * @return mixed
      */
     public function getAuthUserCode()
     {

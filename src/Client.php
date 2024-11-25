@@ -353,7 +353,7 @@ class Client extends HttpMethodsClient
     /**
      * Gets user code for device flow auth.
      *
-     * @return string
+     * @return mixed
      */
     public function getAuthUserCode()
     {
