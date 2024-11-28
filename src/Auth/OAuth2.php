@@ -45,6 +45,11 @@ class OAuth2 implements AuthInterface
      */
     const OAUTH2_AUTH_DEVICE_URL = 'https://allegro.pl/auth/oauth/device';
 
+    /**
+     * Api device code sandbox URL.
+     */
+    const OAUTH2_AUTH_DEVICE_SANDBOX_URL = 'https://allegro.pl.allegrosandbox.pl/auth/oauth/device';
+
     const CODE_TYPE_AUTH = 1;
     const CODE_TYPE_DEVICE = 2;
 
@@ -220,7 +225,7 @@ class OAuth2 implements AuthInterface
     /**
      * Gets user code for device flow auth.
      *
-     * @return string
+     * @return mixed
      */
     public function getAuthUserCode()
     {
@@ -237,7 +242,9 @@ class OAuth2 implements AuthInterface
 
         $request = $this->requestFactory->createRequest(
             'POST',
-            self::OAUTH2_AUTH_DEVICE_URL,
+            $this->credentials->isSandbox()
+            ? self::OAUTH2_AUTH_DEVICE_SANDBOX_URL
+            : self::OAUTH2_AUTH_DEVICE_URL,
             $headers,
             http_build_query($params)
         );
